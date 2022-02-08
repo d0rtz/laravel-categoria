@@ -20,40 +20,40 @@ class CategoriasController extends Controller
     public function create(Request $request)
     {
         $this->validate($request, [
-            'description' => 'required'
+            'nombre' => 'required'
         ]);
-        $task = new Categoria();
-        $task->description = $request->description;
-        $task->user_id = auth()->user()->id;
-        $task->save();
+        $categoria = new Categoria();
+        $categoria->nombre = $request->nombre;
+        $categoria->user_id = auth()->user()->id;
+        $categoria->save();
         return redirect('/dashboard');
     }
 
-    public function edit(Categoria $task)
+    public function edit(Categoria $categoria)
     {
 
-        if (auth()->user()->id == $task->user_id)
+        if (auth()->user()->id == $categoria->user_id)
         {
-            return view('edit', compact('task'));
+            return view('edit', compact('categoria'));
         }
         else {
             return redirect('/dashboard');
         }
     }
 
-    public function update(Request $request, Categoria $task)
+    public function update(Request $request, Categoria $categoria)
     {
         if(isset($_POST['delete'])) {
-            $task->delete();
+            $categoria->delete();
             return redirect('/dashboard');
         }
         else
         {
             $this->validate($request, [
-                'description' => 'required'
+                'nombre' => 'required'
             ]);
-            $task->description = $request->description;
-            $task->save();
+            $categoria->nombre = $request->nombre;
+            $categoria->save();
             return redirect('/dashboard');
         }
     }
